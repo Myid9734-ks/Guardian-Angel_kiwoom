@@ -553,13 +553,15 @@ class MyWindow(QMainWindow):
         
                 now = 체결시간[0:7]
                 # try:
-                if int(now) < 90100 : # if int(now) < 90059: 
+                if int(now) < 90059 : # if int(now) < 90059: 
                     per = 1
                     self.algo4[code]['cal_min'].append(현재가) # 목표가 계산을 위한 1분봉이 될때까지 모음
                     self.algo4[code]['code'] = max(self.algo4[code]['cal_min']) # 모은 분봉중 최고값을 목표가로 저장
+                    self.algo4[code]['min_min'] = min(self.algo4[code]['cal_min'])
                     # self.algo4[code]['code'] = self.algo4[code]['min_max']
                     try:
-                        per = (현재가 - self.algo4[code]['code']) / self.algo4[code]['code'] * 100 
+                        per = (현재가 - min(self.algo4[code]['cal_min'])) / min(self.algo4[code]['cal_min']) * 100 
+                        # per = (현재가 - self.algo4[code]['code']) / self.algo4[code]['code'] * 100 
                         per = float(per)
                     except:
                         pass
@@ -569,6 +571,8 @@ class MyWindow(QMainWindow):
                         print(f"현재가 : {현재가} / 목표가 {self.algo4[code]['code']} _____________ {code}")
 
                 else:
+                    self.algo4[code]['cal_min'].append(현재가)
+                    self.algo4[code]['min_min'] = min(self.algo4[code]['cal_min'])
                     print(f"현재가 : {현재가} / 목표가 {self.algo4[code]['code']} _____________ {code}")
                     if int(self.algo4[code]['code']) < 현재가:
                         # self.algo4[code]['code'] = self.algo4[code]['min_max']   
@@ -581,7 +585,9 @@ class MyWindow(QMainWindow):
                     elif int(self.algo4[code]['code']) == 현재가: # 목표가 보다 같을 경우
                         pass    
                     elif int(self.algo4[code]['code']) > 현재가: # 목표가 보다 작을 경우
-                        per = (현재가 - self.algo4[code]['code']) / self.algo4[code]['code'] * 100 
+                        print(code, 현재가, min(self.algo4[code]['cal_min']), '0000000000000000000000000' )
+                        per = (현재가 - int(min(self.algo4[code]['cal_min']))) / int(min(self.algo4[code]['cal_min'])) * 100 
+                        # per = (현재가 - self.algo4[code]['code']) / self.algo4[code]['code'] * 100 
                         per = float(per)
                         if per <= -1.5:
                             self.algo4[code]['mesu_ok']= 'True'

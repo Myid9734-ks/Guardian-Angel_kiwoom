@@ -1,7 +1,7 @@
 from PyQt5.QtGui import QFont, QColor
 
 openapi_path = 'C:/OpenAPI'
-system_path = 'C:/Guardian Angel_kiwoom'
+system_path = 'C:/Guardian-Angel_kiwoom'
 db_path = 'D:/PythonProjects/MyKiwoom/db'
 db_stg = f'{db_path}/stg.db'
 db_day = f'{db_path}/day.db'
